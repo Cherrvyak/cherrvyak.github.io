@@ -14,8 +14,10 @@
 
     .logo-container {
         position: absolute;
-        width: 100%;
+        width: 30%;
         height: 100%;
+        padding-top: 90px;
+        padding-left: 20px;
         justify-content: center;
         align-items: center;
         z-index: 10;
@@ -64,7 +66,7 @@
         vec3 palette(float t) {
             vec3 a = vec3(0.5, 1.0, 1.0);
             vec3 b = vec3(0.1, 0.3, 0.3);
-            vec3 c = vec3(0.0, 1, 1);
+            vec3 c = vec3(0.0, 2, 2);
             vec3 d = vec3(0.1, 0.33, 0.33);
             
             return a + b * cos(6.28318 * (c * t + d));
