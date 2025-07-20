@@ -7,7 +7,7 @@
 <style>
 body {
   margin: 0;
-  background: white; 
+  background: white; /* Белый фон по умолчанию */
   overflow: hidden;
 }
 
@@ -16,19 +16,20 @@ body {
   top: 0;
   left: 0;
   z-index: 777;
-  display: none;
+  display: none; /* Скрываем по умолчанию */
 }
 
 #shader {
-  display: none;
+  display: none; /* Скрываем по умолчанию */
 }
 
 #desktop-image {
-  width: 22%;
+  height: 80vh;
   object-fit: contain;
-  display: block; 
+  display: block; /* Показываем по умолчанию */
 }
 
+/* Стили для мобильных устройств */
 @media screen and (max-width: 500px) {
   body {
     background: black;
@@ -39,7 +40,7 @@ body {
   }
   
   .logo-container svg {
-    width: 100%;
+    width: 80%;
   }
   
   #shader {
@@ -51,9 +52,10 @@ body {
   }
 }
 
+/* Стили для десктопов */
 @media screen and (min-width: 501px) {
   .logo-container svg {
-    width: 100%;
+    width: 80%;
   }
 }
 
