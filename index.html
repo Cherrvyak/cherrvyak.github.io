@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>biven</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 body {
   margin: 0;
-  background: black;
+  background: white; 
   overflow: hidden;
 }
 
@@ -16,32 +16,60 @@ body {
   top: 0;
   left: 0;
   z-index: 777;
+  display: none;
+}
+
+#shader {
+  display: none;
+}
+
+#desktop-image {
+  width: 20%;
+  object-fit: contain;
+  display: block; 
 }
 
 @media screen and (max-width: 500px) {
+  body {
+    background: black;
+  }
+  
+  .logo-container {
+    display: block;
+  }
+  
   .logo-container svg {
-    width: 480px;
+    width: 100%;
+  }
+  
+  #shader {
+    display: block;
+  }
+  
+  #desktop-image {
+    display: none;
   }
 }
 
 @media screen and (min-width: 501px) {
   .logo-container svg {
-    width: 400px;
+    width: 100%;
   }
 }
 
 .logo-container svg {
   display: block;
 }
-
 </style>
 </head>
 <body>
+    <img id="desktop-image" src="Frame 322.svg" >
+
     <div class="logo-container">
         <svg viewBox="-20 -100 325 622" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M124.976 328.576V353.685H99.9512V328.576H124.976ZM74.9878 428.891L74.9878 353.685H99.9512L99.9512 428.891H124.976L124.976 353.685H150L150 454H25L25 353.685H49.9634L49.9634 428.891H74.9878ZM74.9878 328.576V353.685H49.9634V328.576H74.9878Z" fill="#02383880"/>
-            <path d="M150 252.055H124.976V226.945H150V252.055ZM25 302.212L25 277.103H99.9512V302.212H25ZM25 201.897L25 176.788H99.9512V201.897H25ZM124.976 226.945H99.9512L99.9512 201.897H124.976V226.945ZM99.9512 277.103V252.055H124.976V277.103H99.9512Z" fill="#02383880"/>
-            <path d="M25 50.1094L25 25L150 25V50.1094H124.976V75.1575H99.9512V50.1094L25 50.1094ZM49.9634 125.315L49.9634 100.267H74.9878V125.315H150V150.424H25L25 125.315H49.9634ZM74.9878 100.267L74.9878 75.1575L99.9512 75.1575L99.9512 100.267L74.9878 100.267Z" fill="#02383880"/>
+            <path d="M124.976 328.576V353.685H99.9512V328.576H124.976ZM74.9878 428.891L74.9878 353.685H99.9512L99.9512 428.891H124.976L124.976 353.685H150L150 454H25L25 353.685H49.9634L49.9634 428.891H74.9878ZM74.9878 328.576V353.685H49.9634V328.576H74.9878Z" fill="#00202055"/>
+            <path d="M150 252.055H124.976V226.945H150V252.055ZM25 302.212L25 277.103H99.9512V302.212H25ZM25 201.897L25 176.788H99.9512V201.897H25ZM124.976 226.945H99.9512L99.9512 201.897H124.976V226.945ZM99.9512 277.103V252.055H124.976V277.103H99.9512Z" fill="#00202055"/>
+            <path d="M25 50.1094L25 25L150 25V50.1094H124.976V75.1575H99.9512V50.1094L25 50.1094ZM49.9634 125.315L49.9634 100.267H74.9878V125.315H150V150.424H25L25 125.315H49.9634ZM74.9878 100.267L74.9878 75.1575L99.9512 75.1575L99.9512 100.267L74.9878 100.267Z" fill="#00202055"/>
         </svg>
     </div>
 
@@ -63,7 +91,7 @@ body {
 
         vec3 palette(float t) {
             vec3 a = vec3(0.6, 0.8, 0.8);
-            vec3 b = vec3(0.4, 0.2, 0.2);
+            vec3 b = vec3(0.5, 0.3, 0.3);
             vec3 c = vec3(6.0, 6.0, 6.0);
             vec3 d = vec3(0.33, 0.33, 0.33);
             
@@ -94,56 +122,75 @@ body {
         let scene, camera, renderer, uniforms;
         
         function init() {
-            const container = document.getElementById('shader');
-            
-            scene = new THREE.Scene();
-            camera = new THREE.Camera();
-            camera.position.z = 1;
-            
-            uniforms = {
-                u_time: { value: 0 },
-                u_resolution: { value: new THREE.Vector2() }
-            };
-            
-            const geometry = new THREE.PlaneBufferGeometry(2, 2);
-            const material = new THREE.ShaderMaterial({
-                uniforms,
-                vertexShader: document.getElementById('vertex').textContent,
-                fragmentShader: document.getElementById('fragment').textContent,
-                transparent: true
-            });
-            
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
-            
-            renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true
-            });
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-            
-            onWindowResize();
-            window.addEventListener('resize', onWindowResize);
+            if (window.innerWidth <= 500) {
+                const container = document.getElementById('shader');
+                
+                scene = new THREE.Scene();
+                camera = new THREE.Camera();
+                camera.position.z = 1;
+                
+                uniforms = {
+                    u_time: { value: 0 },
+                    u_resolution: { value: new THREE.Vector2() }
+                };
+                
+                const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                const material = new THREE.ShaderMaterial({
+                    uniforms,
+                    vertexShader: document.getElementById('vertex').textContent,
+                    fragmentShader: document.getElementById('fragment').textContent,
+                    transparent: true
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+                
+                renderer = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: true
+                });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                container.appendChild(renderer.domElement);
+                
+                onWindowResize();
+                window.addEventListener('resize', onWindowResize);
+                
+                animate();
+            }
         }
         
         function onWindowResize() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            uniforms.u_resolution.value.set(
-                renderer.domElement.width,
-                renderer.domElement.height
-            );
+            if (renderer) {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                uniforms.u_resolution.value.set(
+                    renderer.domElement.width,
+                    renderer.domElement.height
+                );
+            }
         }
         
         function animate() {
-            requestAnimationFrame(animate);
-            uniforms.u_time.value += 0.08;
-            renderer.render(scene, camera);
+            if (renderer) {
+                requestAnimationFrame(animate);
+                uniforms.u_time.value += 0.08;
+                renderer.render(scene, camera);
+            }
         }
         
-        init();
-        animate();
+        if (window.innerWidth <= 500) {
+            init();
+        }
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 500 && renderer) {
+                if (renderer.domElement.parentNode) {
+                    renderer.domElement.parentNode.removeChild(renderer.domElement);
+                }
+                renderer = null;
+            } else if (window.innerWidth <= 500 && !renderer) {
+                init();
+            }
+        });
     </script>
 </body>
 </html>
-
