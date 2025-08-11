@@ -11,6 +11,15 @@ body {
   overflow: hidden;
 }
 
+#floating-image {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            z-index: 9999;
+            max-width: 70vw; /* Можно изменить по вашему усмотрению */
+            max-height: 90vh; /* Можно изменить по вашему усмотрению */
+          }
+
 .logo-container {
   position: absolute;
   top: 0;
@@ -24,9 +33,10 @@ body {
 }
 
 #desktop-image {
-  height: 80vh;
-  object-fit: contain;
-  display: block; /* Показываем по умолчанию */
+
+  height: 60vw;
+  max-height: 90vh;
+  max-width: 30vw;
 }
 
 /* Стили для мобильных устройств */
@@ -47,6 +57,10 @@ body {
     display: block;
   }
   
+  #floating-image{
+    display: none;
+  }
+
   #desktop-image {
     display: none;
   }
@@ -66,7 +80,7 @@ body {
 </head>
 <body>
     <img id="desktop-image" src="Frame 322.svg" >
-
+    <img id="floating-image" src="use.png" alt="Floating Image">
     <div class="logo-container">
         <svg viewBox="-20 -100 325 622" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M124.976 328.576V353.685H99.9512V328.576H124.976ZM74.9878 428.891L74.9878 353.685H99.9512L99.9512 428.891H124.976L124.976 353.685H150L150 454H25L25 353.685H49.9634L49.9634 428.891H74.9878ZM74.9878 328.576V353.685H49.9634V328.576H74.9878Z" fill="#00202055"/>
